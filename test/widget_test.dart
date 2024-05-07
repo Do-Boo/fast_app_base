@@ -32,7 +32,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // 1. Localizations test
-    expect(currentLanguage, Language.korean); //startLocale: const Locale('ko') 이 설정되어 있으므로 한국어로 시작
+    expect(currentLanguage,
+        Language.korean); //startLocale: const Locale('ko') 이 설정되어 있으므로 한국어로 시작
 
     // 2. Custom Theme test
     expect(App.navigatorKey.currentContext!.themeType, CustomTheme.light);

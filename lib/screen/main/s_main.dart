@@ -1,9 +1,11 @@
+import 'package:after_layout/after_layout.dart';
+import 'package:fast_app_base/common/dart/extension/num_duration_extension.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../../common/common.dart';
-import 'w_menu_drawer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,9 +14,9 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => MainScreenState();
 }
 
-class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
-  TabItem _currentTab = TabItem.home;
-  final tabs = [TabItem.home, TabItem.favorite];
+class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin, AfterLayoutMixin {
+  TabItem _currentTab = TabItem.roomFirst;
+  final tabs = [TabItem.roomFirst, TabItem.roomSecond];
   final List<GlobalKey<NavigatorState>> navigatorKeys = [];
 
   int get _currentIndex => tabs.indexOf(_currentTab);
@@ -23,7 +25,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
 
   bool get extendBody => true;
 
-  static double get bottomNavigationBarBorderRadius => 30.0;
+  static double get bottomNavigationBarBorderRadius => 0.0;
 
   @override
   void initState() {
@@ -34,26 +36,22 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: isRootPage,
-      onPopInvoked: _handleBackPressed,
       child: Scaffold(
         extendBody: extendBody, //bottomNavigationBar 아래 영역 까지 그림
-        drawer: const MenuDrawer(),
         body: Container(
-          color: context.appColors.seedColor.getMaterialColorValues[200],
-          padding: EdgeInsets.only(bottom: extendBody ? 60 - bottomNavigationBarBorderRadius : 0),
+          color: Vx.theme10,
+          padding: EdgeInsets.only(bottom: extendBody ? 0 - bottomNavigationBarBorderRadius : 0),
           child: SafeArea(
             bottom: !extendBody,
             child: pages,
           ),
         ),
-        bottomNavigationBar: _buildBottomNavigationBar(context),
+        // bottomNavigationBar: _buildBottomNavigationBar(context),
       ),
     );
   }
 
-  bool get isRootPage =>
-      _currentTab == TabItem.home && _currentTabNavigationKey.currentState?.canPop() == false;
+  bool get isRootPage => _currentTab == TabItem.roomFirst && _currentTabNavigationKey.currentState?.canPop() == false;
 
   IndexedStack get pages => IndexedStack(
       index: _currentIndex,
@@ -74,8 +72,8 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
         return;
       }
 
-      if (_currentTab != TabItem.home) {
-        _changeTab(tabs.indexOf(TabItem.home));
+      if (_currentTab != TabItem.roomFirst) {
+        _changeTab(tabs.indexOf(TabItem.roomFirst));
       }
     }
   }
@@ -87,21 +85,16 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
           BoxShadow(color: Colors.black26, spreadRadius: 0, blurRadius: 10),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(bottomNavigationBarBorderRadius),
-          topRight: Radius.circular(bottomNavigationBarBorderRadius),
-        ),
-        child: BottomNavigationBar(
-          items: navigationBarItems(context),
-          currentIndex: _currentIndex,
-          selectedItemColor: context.appColors.text,
-          unselectedItemColor: context.appColors.iconButtonInactivate,
-          onTap: _handleOnTapNavigationBarItem,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-        ),
+      child: BottomNavigationBar(
+        backgroundColor: Vx.theme10,
+        items: navigationBarItems(context),
+        currentIndex: _currentIndex,
+        selectedItemColor: context.appColors.text,
+        unselectedItemColor: context.appColors.iconButtonInactivate,
+        onTap: _handleOnTapNavigationBarItem,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
@@ -109,10 +102,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   List<BottomNavigationBarItem> navigationBarItems(BuildContext context) {
     return tabs
         .mapIndexed(
-          (tab, index) => tab.toNavigationBarItem(
-            context,
-            isActivated: _currentIndex == index,
-          ),
+          (tab, index) => tab.toNavigationBarItem(context, isActivated: _currentIndex == index),
         )
         .toList();
   }
@@ -123,8 +113,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     });
   }
 
-  BottomNavigationBarItem bottomItem(
-      bool activate, IconData iconData, IconData inActivateIconData, String label) {
+  BottomNavigationBarItem bottomItem(bool activate, IconData iconData, IconData inActivateIconData, String label) {
     return BottomNavigationBarItem(
         icon: Icon(
           key: ValueKey(label),
@@ -157,5 +146,10 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     for (final _ in tabs) {
       navigatorKeys.add(GlobalKey<NavigatorState>());
     }
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    delay(() => FlutterNativeSplash.remove(), 1500.ms);
   }
 }
