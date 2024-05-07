@@ -44,11 +44,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               labelText: 'Search',
               suffixIcon: IconButton(
                 icon: const Icon(Icons.search),
-                onPressed: () {
-                  setState(() {
-                    _searchResult = searchList(_controller.text);
-                  });
-                },
+                onPressed: () => setState(() => _searchResult = searchList(_controller.text)),
               ),
             ),
           ),
