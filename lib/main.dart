@@ -1,7 +1,9 @@
 // 필요한 패키지들을 가져옵니다.
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fast_app_base/common/util/provider_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
 
 // 앱과 관련된 파일들을 가져옵니다.
 import 'app.dart';
@@ -35,5 +37,12 @@ void main() async {
       useOnlyLangCode: true,
 
       // 앱의 루트 위젯을 설정합니다.
-      child: const App()));
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => SearchTextProvider()),
+          ChangeNotifierProvider(create: (context) => SearchResultProvider()),
+          ChangeNotifierProvider(create: (context) => ReservationAppBarLineProvider()),
+        ],
+        child: const App(),
+      )));
 }

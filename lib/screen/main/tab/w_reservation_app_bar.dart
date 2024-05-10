@@ -1,4 +1,5 @@
 import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/widget/w_model.dart';
 import 'package:flutter/material.dart';
 
 class ReservationAppBar extends StatefulWidget {
@@ -9,60 +10,31 @@ class ReservationAppBar extends StatefulWidget {
 }
 
 class _ReservationAppBarState extends State<ReservationAppBar> {
-  bool _showRedDot = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 62,
+      height: 60,
       width: double.infinity,
       color: Vx.theme10,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
         child: Column(
           children: [
             Row(
               children: [
-                Tap(
-                  onTap: () => setState(() => _showRedDot = !_showRedDot),
-                  child: Stack(
-                    children: [
-                      Icon((_showRedDot ? Icons.bedtime_outlined : Icons.bedtime), color: Vx.gray500, size: 30),
-                    ],
-                  ),
-                ),
+                const Text("events",
+                    style: TextStyle(
+                      fontFamily: "NotoSansKR-Bold",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                      color: Color.fromARGB(255, 237, 107, 98),
+                    )),
                 emptyExpanded,
-                Tap(
-                  onTap: () => setState(() => _showRedDot = !_showRedDot),
-                  child: Stack(
-                    children: [
-                      const Icon(Icons.notifications, color: Vx.gray500, size: 30),
-                      if (_showRedDot)
-                        Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Container().box.roundedFull.color(Colors.red).size(6, 6).make(),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+                SearchButton(icon: Icons.search, onPressed: () => {}),
+                width10,
+                RoundButton(icon: Icons.notifications, onPressed: () => print("asd1f")),
               ],
             ),
-            // Row(
-            //   children: [
-            //     const Text("2024. 05. 02.(목)", style: TextStyle(fontSize: 21, color: Vx.gray500)),
-            //     emptyExpanded,
-            //     Tap(
-            //       onTap: () => setState(() => _showRedDot = !_showRedDot),
-            //       child: Stack(
-            //         children: [
-            //           Icon((_showRedDot ? Icons.bedtime_outlined : Icons.bedtime), color: Vx.gray500, size: 30),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

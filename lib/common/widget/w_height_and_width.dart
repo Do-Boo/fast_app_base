@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// const double screenWidth = MediaQuery.of(context).size.width;
+
 const width10 = Width(10);
 const width5 = Width(5);
 
