@@ -65,19 +65,12 @@ class _WeekCalendarState extends State<WeekCalendar> {
           ),
         ),
         onDaySelected: (selectedDay, focusedDay) async {
-          // Add async keyword
           setState(() {
             _selectedDay = selectedDay;
-            // Provider.of<SelectedDayProvider>(context, listen: false).setSelectedDay(selectedDay);
-            // Provider.of<SearchTextProvider>(context, listen: false).setSearchText(Provider.of<SearchTextProvider>(context, listen: false).searchText);
             _focusedDay = focusedDay;
           });
-
-          // Call searchList asynchronously
-          // List<Map>? searchResult = await searchList(Provider.of<SearchTextProvider>(context, listen: false).searchText, selectedDay);
-
-          // Update SearchResultProvider state with the result
-          // Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchResult);
+          Provider.of<SelectedDayProvider>(context, listen: false).setSelectedDay(selectedDay);
+          Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(context));
         },
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;

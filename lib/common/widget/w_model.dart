@@ -104,7 +104,7 @@ class _SearchButtonState extends State<SearchButton> {
                 ),
                 onSubmitted: (e) {
                   Provider.of<SearchTextProvider>(context, listen: false).setSearchText(_controller.text);
-                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(_controller.text, DateTime.now()));
+                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(context));
                 },
               ),
             ),
@@ -119,7 +119,7 @@ class _SearchButtonState extends State<SearchButton> {
                   _test ? _focusNode.requestFocus() : _focusNode.unfocus();
                   if (_controller.text == "") return;
                   Provider.of<SearchTextProvider>(context, listen: false).setSearchText(_controller.text);
-                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(_controller.text, DateTime.now()));
+                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(context));
                 },
                 child: Icon(widget.icon, color: const Color.fromARGB(255, 82, 88, 81), size: 42 * 0.6),
               ),

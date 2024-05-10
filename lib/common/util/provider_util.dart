@@ -39,9 +39,7 @@ class SearchResultProvider with ChangeNotifier {
   Future<List<Map>>? get searchResult => _searchResult;
 
   void setSearchResult(Future<List<Map>>? value) {
-    if (value != null) {
-      _searchResult = value;
-      notifyListeners();
-    }
+    _searchResult = value;
+    notifyListeners();
   }
 }
