@@ -58,6 +58,14 @@ class _SearchButtonState extends State<SearchButton> {
   final _focusNode = FocusNode();
 
   @override
+  void initState() {
+    _controller.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
       padding: const EdgeInsets.only(right: 8.4),
@@ -81,14 +89,22 @@ class _SearchButtonState extends State<SearchButton> {
               child: TextField(
                 controller: _controller,
                 focusNode: _focusNode,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
                   hintText: "Search Text",
-                  contentPadding: EdgeInsets.only(left: 16, bottom: 8),
+                  contentPadding: const EdgeInsets.only(left: 16),
+                  suffixIcon: _controller.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.close, size: 18),
+                          onPressed: () => setState(() => _controller.clear()),
+                        )
+                      : null,
                 ),
                 onSubmitted: (e) {
                   Provider.of<SearchTextProvider>(context, listen: false).setSearchText(_controller.text);
-                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(_controller.text));
+                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(_controller.text, DateTime.now()));
                 },
               ),
             ),
@@ -103,7 +119,7 @@ class _SearchButtonState extends State<SearchButton> {
                   _test ? _focusNode.requestFocus() : _focusNode.unfocus();
                   if (_controller.text == "") return;
                   Provider.of<SearchTextProvider>(context, listen: false).setSearchText(_controller.text);
-                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(_controller.text));
+                  Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(_controller.text, DateTime.now()));
                 },
                 child: Icon(widget.icon, color: const Color.fromARGB(255, 82, 88, 81), size: 42 * 0.6),
               ),

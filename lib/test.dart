@@ -14,7 +14,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 128),
+      padding: const EdgeInsets.only(top: 136),
       child: Column(
         children: [
           Expanded(

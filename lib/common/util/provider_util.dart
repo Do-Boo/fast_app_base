@@ -22,13 +22,26 @@ class ReservationAppBarLineProvider with ChangeNotifier {
   }
 }
 
+class SelectedDayProvider with ChangeNotifier {
+  DateTime _selectedDay = DateTime.now();
+
+  DateTime get selectedDay => _selectedDay;
+
+  void setSelectedDay(DateTime selectedDay) {
+    _selectedDay = selectedDay;
+    notifyListeners();
+  }
+}
+
 class SearchResultProvider with ChangeNotifier {
   Future<List<Map>>? _searchResult;
 
   Future<List<Map>>? get searchResult => _searchResult;
 
   void setSearchResult(Future<List<Map>>? value) {
-    _searchResult = value;
-    notifyListeners();
+    if (value != null) {
+      _searchResult = value;
+      notifyListeners();
+    }
   }
 }

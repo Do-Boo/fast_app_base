@@ -1,4 +1,8 @@
+import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/util/mysql/mysql_query.dart';
+import 'package:fast_app_base/common/util/provider_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class WeekCalendar extends StatefulWidget {
@@ -9,19 +13,32 @@ class WeekCalendar extends StatefulWidget {
 }
 
 class _WeekCalendarState extends State<WeekCalendar> {
-  CalendarFormat _calendarFormat = CalendarFormat.week;
+  final CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  DateTime _selectedDay = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 64),
+      padding: const EdgeInsets.only(top: 72),
+      height: 140,
+      decoration: BoxDecoration(
+        color: Vx.theme10,
+        boxShadow: [
+          BoxShadow(
+            color: Provider.of<ReservationAppBarLineProvider>(context).reservationAppbarLine ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+            spreadRadius: 0.5,
+            blurRadius: 5,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: TableCalendar(
         firstDay: DateTime.utc(2010, 10, 16),
         lastDay: DateTime.utc(2030, 3, 14),
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
+        locale: 'en_US',
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
         headerVisible: false,
         daysOfWeekStyle: DaysOfWeekStyle(
@@ -32,29 +49,43 @@ class _WeekCalendarState extends State<WeekCalendar> {
           outsideDaysVisible: false,
           weekendTextStyle: const TextStyle().copyWith(color: Colors.red),
           holidayTextStyle: const TextStyle().copyWith(color: Colors.blue),
-          selectedTextStyle: const TextStyle().copyWith(color: Colors.blue),
-          selectedDecoration: const BoxDecoration(
+          selectedTextStyle: const TextStyle().copyWith(color: Colors.black),
+          todayTextStyle: const TextStyle().copyWith(color: Colors.black),
+          selectedDecoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color.fromARGB(100, 221, 221, 221),
+            color: Colors.transparent,
+            border: Border.all(
+              color: Vx.gray200,
+              width: 1,
+            ),
           ),
           todayDecoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Color.fromARGB(100, 221, 221, 221),
+            color: Color.fromARGB(255, 237, 107, 98),
           ),
         ),
-        onDaySelected: (selectedDay, focusedDay) {
+        onDaySelected: (selectedDay, focusedDay) async {
+          // Add async keyword
           setState(() {
-            _focusedDay = focusedDay;
             _selectedDay = selectedDay;
+            // Provider.of<SelectedDayProvider>(context, listen: false).setSelectedDay(selectedDay);
+            // Provider.of<SearchTextProvider>(context, listen: false).setSearchText(Provider.of<SearchTextProvider>(context, listen: false).searchText);
+            _focusedDay = focusedDay;
           });
+
+          // Call searchList asynchronously
+          // List<Map>? searchResult = await searchList(Provider.of<SearchTextProvider>(context, listen: false).searchText, selectedDay);
+
+          // Update SearchResultProvider state with the result
+          // Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchResult);
         },
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;
         },
         onFormatChanged: (format) {
-          setState(() {
-            _calendarFormat = format;
-          });
+          // setState(() {
+          //   _calendarFormat = format;
+          // });
         },
       ),
     );

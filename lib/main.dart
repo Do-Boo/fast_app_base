@@ -42,6 +42,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => SearchTextProvider()),
           ChangeNotifierProvider(create: (context) => SearchResultProvider()),
           ChangeNotifierProvider(create: (context) => ReservationAppBarLineProvider()),
+          ChangeNotifierProvider(create: (context) => SelectedDayProvider()),
         ],
         child: const App(),
       )));

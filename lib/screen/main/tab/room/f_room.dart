@@ -19,7 +19,7 @@ class _RoomFragmentState extends State<RoomFragment> {
   void initState() {
     Future.delayed(Duration.zero, () {
       Provider.of<ReservationAppBarLineProvider>(context, listen: false).setReservationAppbarLine(false);
-      Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(""));
+      Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList("", DateTime.now()));
     });
     super.initState();
   }
