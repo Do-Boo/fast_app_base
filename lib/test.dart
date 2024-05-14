@@ -14,7 +14,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 136),
+      padding: const EdgeInsets.only(top: 136, bottom: 92),
       child: Column(
         children: [
           Expanded(
@@ -26,7 +26,10 @@ class _SearchWidgetState extends State<SearchWidget> {
                     if (snapshot.hasData) {
                       return SingleChildScrollView(
                         child: Column(
-                          children: snapshot.data!.map((item) => Html(data: item["roomName"])).toList(),
+                          children: snapshot.data!
+                              .map((item) =>
+                                  Html(data: item["roomName"] + "<br>" + item["useDate"].toString().replaceAll("<br>", " ") + "<br>" + item["description"]))
+                              .toList(),
                         ),
                       );
                     } else if (snapshot.hasError) {

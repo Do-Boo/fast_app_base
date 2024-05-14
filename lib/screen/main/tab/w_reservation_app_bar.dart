@@ -15,7 +15,7 @@ class _ReservationAppBarState extends State<ReservationAppBar> {
     return Container(
       height: 60,
       width: double.infinity,
-      color: Vx.theme10,
+      color: Vx.white,
       child: Padding(
         padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
         child: Column(

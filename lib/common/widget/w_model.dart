@@ -103,6 +103,9 @@ class _SearchButtonState extends State<SearchButton> {
                       : null,
                 ),
                 onSubmitted: (e) {
+                  setState(() => _test = !_test || _controller.text != "");
+                  _test ? _focusNode.requestFocus() : _focusNode.unfocus();
+                  if (_controller.text == "") return;
                   Provider.of<SearchTextProvider>(context, listen: false).setSearchText(_controller.text);
                   Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(context));
                 },

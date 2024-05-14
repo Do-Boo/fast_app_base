@@ -18,7 +18,7 @@ enum TabItem {
         icon: Icon(
           key: ValueKey(tabName),
           isActivated ? activeIcon : inActiveIcon,
-          color: isActivated ? Vx.theme10 : Vx.gray300,
+          color: isActivated ? Vx.white : Vx.gray300,
         ),
         label: tabName);
   }

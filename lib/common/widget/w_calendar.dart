@@ -23,7 +23,7 @@ class _WeekCalendarState extends State<WeekCalendar> {
       padding: const EdgeInsets.only(top: 72),
       height: 140,
       decoration: BoxDecoration(
-        color: Vx.theme10,
+        color: Vx.white,
         boxShadow: [
           BoxShadow(
             color: Provider.of<ReservationAppBarLineProvider>(context).reservationAppbarLine ? Colors.grey.withOpacity(0.2) : Colors.transparent,
@@ -70,6 +70,7 @@ class _WeekCalendarState extends State<WeekCalendar> {
             _focusedDay = focusedDay;
           });
           Provider.of<SelectedDayProvider>(context, listen: false).setSelectedDay(selectedDay);
+          Provider.of<SearchTextProvider>(context, listen: false).setSearchText("");
           Provider.of<SearchResultProvider>(context, listen: false).setSearchResult(searchList(context));
         },
         onPageChanged: (focusedDay) {

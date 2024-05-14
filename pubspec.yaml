@@ -88,6 +88,7 @@ dependencies:
   table_calendar: ^3.0.9
   scroll_to_hide: ^2.1.0
   intl: ^0.18.1
+  grpc: ^3.2.4
 
 dev_dependencies:
   flutter_test:
@@ -106,6 +107,7 @@ dev_dependencies:
   mock_web_server: ^5.0.0-nullsafety.1
   flutter_oss_licenses: ^2.0.1
   test: ^1.22.0
+  flutter_launcher_icons: ^0.13.1
 
 
 

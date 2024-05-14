@@ -16,7 +16,7 @@ class RoundedContainer extends StatelessWidget {
         boxShadow: [
           BoxShadow(color: Colors.black12, spreadRadius: 0, blurRadius: 10),
         ],
-        color: Vx.theme10,
+        color: Vx.white,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: child,

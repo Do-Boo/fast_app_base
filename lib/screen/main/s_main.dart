@@ -1,9 +1,11 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:fast_app_base/common/dart/extension/num_duration_extension.dart';
+import 'package:fast_app_base/common/util/provider_util.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/common.dart';
 
@@ -39,14 +41,14 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
       child: Scaffold(
         extendBody: extendBody, //bottomNavigationBar 아래 영역 까지 그림
         body: Container(
-          color: Vx.theme10,
+          color: Vx.white,
           padding: EdgeInsets.only(bottom: extendBody ? 0 - bottomNavigationBarBorderRadius : 0),
           child: SafeArea(
             bottom: !extendBody,
             child: pages,
           ),
         ),
-        // bottomNavigationBar: _buildBottomNavigationBar(context),
+        bottomNavigationBar: _buildBottomNavigationBar(context),
       ),
     );
   }
@@ -65,28 +67,33 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
               ))
           .toList());
 
-  void _handleBackPressed(bool didPop) {
-    if (!didPop) {
-      if (_currentTabNavigationKey.currentState?.canPop() == true) {
-        Nav.pop(_currentTabNavigationKey.currentContext!);
-        return;
-      }
+  // void _handleBackPressed(bool didPop) {
+  //   if (!didPop) {
+  //     if (_currentTabNavigationKey.currentState?.canPop() == true) {
+  //       Nav.pop(_currentTabNavigationKey.currentContext!);
+  //       return;
+  //     }
 
-      if (_currentTab != TabItem.roomFirst) {
-        _changeTab(tabs.indexOf(TabItem.roomFirst));
-      }
-    }
-  }
+  //     if (_currentTab != TabItem.roomFirst) {
+  //       _changeTab(tabs.indexOf(TabItem.roomFirst));
+  //     }
+  //   }
+  // }
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(color: Colors.black26, spreadRadius: 0, blurRadius: 10),
+          BoxShadow(
+            color: Provider.of<ReservationAppBarLineProvider>(context).reservationAppbarLine ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+            spreadRadius: 0.5,
+            blurRadius: 5,
+            offset: const Offset(0, -5), // changes position of shadow
+          ),
         ],
       ),
       child: BottomNavigationBar(
-        backgroundColor: Vx.theme10,
+        backgroundColor: Vx.white,
         items: navigationBarItems(context),
         currentIndex: _currentIndex,
         selectedItemColor: context.appColors.text,
@@ -118,6 +125,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
         icon: Icon(
           key: ValueKey(label),
           activate ? iconData : inActivateIconData,
+          // color: activate ? const Color.fromARGB(255, 237, 107, 98) : Vx.gray200,
           color: activate ? context.appColors.iconButton : context.appColors.iconButtonInactivate,
         ),
         label: label);
