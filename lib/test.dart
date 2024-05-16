@@ -1,3 +1,4 @@
+import "package:fast_app_base/common/common.dart";
 import "package:fast_app_base/common/util/provider_util.dart";
 import "package:flutter/material.dart";
 import "package:flutter_html/flutter_html.dart";
@@ -15,6 +16,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 136, bottom: 92),
+      color: Vx.white,
       child: Column(
         children: [
           Expanded(
@@ -27,8 +29,14 @@ class _SearchWidgetState extends State<SearchWidget> {
                       return SingleChildScrollView(
                         child: Column(
                           children: snapshot.data!
-                              .map((item) =>
-                                  Html(data: item["roomName"] + "<br>" + item["useDate"].toString().replaceAll("<br>", " ") + "<br>" + item["description"]))
+                              .map((item) => Html(
+                                      data: "<h1>${item["roomName"]}<br>${item["useDate"].toString().replaceAll("<br>", " ")}<br>${item["description"]}",
+                                      style: {
+                                        'h1': Style(
+                                          color: Vx.gray500,
+                                          fontSize: FontSize(14),
+                                        ),
+                                      }))
                               .toList(),
                         ),
                       );

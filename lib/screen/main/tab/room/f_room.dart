@@ -44,7 +44,7 @@ class _RoomFragmentState extends State<RoomFragment> {
           return true;
         },
         child: Container(
-          color: Vx.white,
+          color: const Color.fromARGB(255, 8, 29, 48),
           child: const Stack(
             children: [
               SearchWidget(),

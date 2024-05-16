@@ -54,7 +54,7 @@ class AppState extends State<App> with Nav, WidgetsBindingObserver {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           title: 'Image Finder',
-          theme: context.themeType.themeData,
+          // theme: context.themeType.themeData,
           home: const MainScreen(),
         );
       }),
