@@ -158,6 +158,6 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
-    delay(() => FlutterNativeSplash.remove(), 1000.ms);
+    delay(() => FlutterNativeSplash.remove(), 1500.ms);
   }
 }
